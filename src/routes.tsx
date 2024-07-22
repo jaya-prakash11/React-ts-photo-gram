@@ -6,13 +6,36 @@ import SignUp from "./pages/signup";
 import Profile from "./pages/profile";
 import Post from "./pages/post";
 import MyPhotos from "./pages/myPhotos";
+import ProtectRoutes from "./components/protectedRoutes";
 
 const routes = createBrowserRouter([
   {
-    path: "/",
-    element: <Home />,
+    element: <ProtectRoutes />,
     errorElement: <Error />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/post",
+        element: <Post />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/myPhotos",
+        element: <MyPhotos />,
+        errorElement: <Error />,
+      },
+    ],
   },
+
   {
     path: "/login",
     element: <Login />,
@@ -21,21 +44,6 @@ const routes = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/post",
-    element: <Post />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/myPhotos",
-    element: <MyPhotos />,
     errorElement: <Error />,
   },
 ]);
