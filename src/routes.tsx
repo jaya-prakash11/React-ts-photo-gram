@@ -7,6 +7,7 @@ import Profile from "./pages/profile";
 import Post from "./pages/post";
 import MyPhotos from "./pages/myPhotos";
 import ProtectRoutes from "./components/protectedRoutes";
+import AddPhotos from "./pages/addPhotos";
 
 const routes = createBrowserRouter([
   {
@@ -31,6 +32,11 @@ const routes = createBrowserRouter([
       {
         path: "/myPhotos",
         element: <MyPhotos />,
+        errorElement: <Error />,
+      },
+      {
+        path: "/addPhotos",
+        element: <AddPhotos />,
         errorElement: <Error />,
       },
     ],

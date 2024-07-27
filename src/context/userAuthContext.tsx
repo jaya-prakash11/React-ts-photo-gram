@@ -1,14 +1,14 @@
 import { auth } from "@/firebaseConfig";
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
   User,
 } from "firebase/auth";
-import { GoogleAuthProvider } from "firebase/auth/web-extension";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type authType = {
   user: User | null;
@@ -71,5 +71,5 @@ export const AuthProvider: React.FunctionComponent<IUserAuthProviderProps> = ({
 };
 
 export const useUserAuth = () => {
-  return createContext(authContext);
+  return useContext(authContext);
 };
