@@ -38,9 +38,10 @@ const AddPhotos: React.FunctionComponent<IAppProps> = ({}: Props) => {
       if (user) {
         const newPost = {
           ...post,
-          user: user.uid,
+          userId: user.uid,
           photos: PhotoMeta,
         };
+        console.log("newPost", newPost);
         await createPost(newPost);
         navigate("/");
       } else {

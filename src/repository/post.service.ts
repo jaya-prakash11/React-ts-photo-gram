@@ -23,11 +23,11 @@ export const getPosts = () => {
   return getDocs(q);
 };
 
-export const getPostByUserId = (userId: string) => {
-  const q = query(
-    collection(db, COLLECTION_NAME),
-    where("userId", "==", userId)
-  );
+export const getPostByUserId = (id: string) => {
+  const q = query(collection(db, COLLECTION_NAME), where("userId", "==", id));
+
+  getDocs(q).then((res) => console.log("goo", res.docs));
+
   return getDocs(q);
 };
 
