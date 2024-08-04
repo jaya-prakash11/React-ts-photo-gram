@@ -28,7 +28,6 @@ export interface PhotoMeta {
 }
 
 export interface DocumentResponse {
-  push(responseObject: DocumentResponse): unknown;
   id: string;
   caption: string;
   photos: PhotoMeta[];
