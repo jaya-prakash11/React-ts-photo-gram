@@ -1,9 +1,11 @@
 import Layout from "@/components/layout";
+import PostCard from "@/components/PostCard";
 import Stories from "@/components/stories";
 import { useUserAuth } from "@/context/userAuthContext";
 import { getPosts } from "@/repository/post.service";
 import { DocumentResponse } from "@/types";
 import { Search } from "lucide-react";
+
 import React, { useEffect, useState } from "react";
 
 type Props = {};
@@ -25,6 +27,10 @@ const Home: React.FunctionComponent<IAppProps> = ({}: Props) => {
     }
   }, []);
 
+  const rendrPost = () => {
+    return data?.map((res) => <PostCard data={res} />);
+  };
+
   return (
     <Layout>
       <div className="flex flex-col w-full h-auto">
@@ -34,6 +40,9 @@ const Home: React.FunctionComponent<IAppProps> = ({}: Props) => {
         </div>
         <div>
           <Stories></Stories>
+        </div>
+        <div className="flex flex-col w-full justify-center items-center mt-7">
+          {data ? rendrPost() : <div>....Loading </div>}
         </div>
       </div>
     </Layout>

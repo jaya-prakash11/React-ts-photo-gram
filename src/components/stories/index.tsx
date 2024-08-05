@@ -6,8 +6,6 @@ import ProfileImage3 from "../../assets/images/profileimg3.jpeg";
 
 import ProfileImage4 from "../../assets/images/profileimg4.jpeg";
 
-import ProfileImage5 from "../../assets/images/profileimg5.jpeg";
-
 type Props = {};
 type IAppProps = {};
 const Stories: React.FunctionComponent<IAppProps> = ({}: Props) => {
