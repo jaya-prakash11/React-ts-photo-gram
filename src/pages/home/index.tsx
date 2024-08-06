@@ -13,11 +13,12 @@ type IAppProps = {};
 
 const Home: React.FunctionComponent<IAppProps> = ({}: Props) => {
   const { user } = useUserAuth();
+  const [updateLikes, setUpDateLikes] = useState<boolean>(false);
   const [data, setData] = useState<DocumentResponse[]>();
 
   async function getAllPost() {
     const response: DocumentResponse[] = await getPosts();
-    console.log(response);
+    console.log("response", response);
     setData(response);
   }
 
@@ -27,8 +28,9 @@ const Home: React.FunctionComponent<IAppProps> = ({}: Props) => {
     }
   }, []);
 
+  console.log("dasssta", data);
   const rendrPost = () => {
-    return data?.map((res) => <PostCard data={res} />);
+    return data?.map((res) => <PostCard data={res} onChange={getAllPost} />);
   };
 
   return (
