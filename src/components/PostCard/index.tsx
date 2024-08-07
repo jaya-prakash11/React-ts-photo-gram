@@ -67,7 +67,7 @@ const PostCard: React.FunctionComponent<IAppProps> = ({
         <CardContent className="flex h-[400px]">
           <img
             className="object-cover w-full"
-            src={data.photos[0].cdnUrl}
+            src={data.photos[0]?.cdnUrl}
           ></img>
         </CardContent>
         <CardFooter className="flex flex-col w-full">
