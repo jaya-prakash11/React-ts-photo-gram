@@ -32,7 +32,7 @@ const FileUploader: React.FunctionComponent<IFileUploaderProps> = ({
         showEmptyList={true}
       />
 
-      <div>
+      {/* <div>
         {fileEntry.files?.map((file) => (
           <div key={file.uuid}>
             {file !== null && (
@@ -40,7 +40,7 @@ const FileUploader: React.FunctionComponent<IFileUploaderProps> = ({
             )}
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

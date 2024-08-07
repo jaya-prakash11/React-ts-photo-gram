@@ -45,6 +45,7 @@ export interface ProfileInfo {
 }
 
 export interface UserProfile {
+  id?: string;
   userId?: User;
   displayName?: string;
   photoUrl?: string;

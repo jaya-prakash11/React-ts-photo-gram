@@ -1,15 +1,17 @@
 import Layout from "@/components/layout";
 import { useUserAuth } from "@/context/userAuthContext";
-import { DocumentResponse, ProfileResponse } from "./../../types/index";
+import { DocumentResponse, Post, ProfileResponse } from "./../../types/index";
 import { useEffect, useState } from "react";
 import profile from "../../assets/images/profileimg1.jpeg";
 import { Button } from "@/components/ui/button";
 import { HeartIcon } from "lucide-react";
 import { getPostByUserId } from "@/repository/post.service";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 type IAppProps = {};
 const Profile: React.FunctionComponent<IAppProps> = ({}: Props) => {
+  const navigate = useNavigate();
   const { user } = useUserAuth();
 
   const initialResponse: ProfileResponse = {
@@ -20,7 +22,7 @@ const Profile: React.FunctionComponent<IAppProps> = ({}: Props) => {
     userBio: "please update your Bio",
   };
 
-  const [userInfo, setUaerInfo] = useState<ProfileResponse>(initialResponse);
+  const [userInfo, setUserInfo] = useState<ProfileResponse>(initialResponse);
   console.log("usssser", user);
 
   const [data, setData] = useState<DocumentResponse[]>([]);
@@ -73,7 +75,12 @@ const Profile: React.FunctionComponent<IAppProps> = ({}: Props) => {
         </div>
         <div className=" flex flex-col pl-10 mt-8 w-auto gap-5">
           <span>If you want edit your Profile</span>
-          <Button className="w-40">Edit Profile</Button>
+          <Button
+            onClick={() => navigate("/editprofile", { state: userInfo })}
+            className="w-40"
+          >
+            Edit Profile
+          </Button>
         </div>
         <div className="flex w-full flex-wrap mt-7 gap-2">
           {data.map((res: any) => {

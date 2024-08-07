@@ -7,6 +7,7 @@ import Profile from "./pages/profile";
 import MyPhotos from "./pages/myPhotos";
 import ProtectRoutes from "./components/protectedRoutes";
 import AddPhotos from "./pages/addPhotos";
+import EditProfile from "./pages/editProfile";
 
 const routes = createBrowserRouter([
   {
@@ -23,7 +24,11 @@ const routes = createBrowserRouter([
         element: <Profile />,
         errorElement: <Error />,
       },
-
+      {
+        path: "/editprofile",
+        element: <EditProfile />,
+        errorElement: <Error />,
+      },
       {
         path: "/myPhotos",
         element: <MyPhotos />,
