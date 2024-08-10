@@ -1,4 +1,5 @@
 import { auth } from "@/firebaseConfig";
+import { UserProfile } from "@/types";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -6,9 +7,11 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
   User,
 } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
+import { ProfileInfo } from "./../types/index";
 
 type authType = {
   user: User | null;
@@ -16,6 +19,7 @@ type authType = {
   signUp: typeof signUp;
   logOut: typeof logOut;
   googleSignIn: typeof googleSignIn;
+  updateProfileInfo: typeof updateProfileInfo;
 };
 
 const logIn = (email: string, password: string) => {
@@ -32,6 +36,12 @@ const googleSignIn = () => {
   const googleAuthProvider = new GoogleAuthProvider();
   return signInWithPopup(auth, googleAuthProvider);
 };
+const updateProfileInfo = async (ProfileInfo: UserProfile) => {
+  const response = await updateProfile(ProfileInfo.user, {
+    displayName: ProfileInfo.displayName,
+    photoURL: ProfileInfo.photoUrl,
+  });
+};
 
 const authContext = createContext<authType>({
   user: null,
@@ -39,6 +49,7 @@ const authContext = createContext<authType>({
   signUp,
   logOut,
   googleSignIn,
+  updateProfileInfo,
 });
 
 interface IUserAuthProviderProps {
@@ -66,6 +77,7 @@ export const AuthProvider: React.FunctionComponent<IUserAuthProviderProps> = ({
     signUp,
     logOut,
     googleSignIn,
+    updateProfileInfo,
   };
   return <authContext.Provider value={value}>{children}</authContext.Provider>;
 };

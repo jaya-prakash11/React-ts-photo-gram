@@ -45,6 +45,7 @@ export interface ProfileInfo {
 }
 
 export interface UserProfile {
+  user: User;
   id?: string;
   userId?: User;
   displayName?: string;

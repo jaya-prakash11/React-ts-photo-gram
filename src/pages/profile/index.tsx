@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { HeartIcon } from "lucide-react";
 import { getPostByUserId } from "@/repository/post.service";
 import { useNavigate } from "react-router-dom";
+import { getProfileByUserId } from "@/repository/user.service";
 
 type Props = {};
 type IAppProps = {};
@@ -29,7 +30,6 @@ const Profile: React.FunctionComponent<IAppProps> = ({}: Props) => {
 
   const getAllPost = async (id: string) => {
     try {
-      console.log("id", id);
       const querySnapshot = await getPostByUserId(id);
       console.log("querySnapshot", querySnapshot);
       const tempArray: DocumentResponse[] = [];
@@ -53,11 +53,23 @@ const Profile: React.FunctionComponent<IAppProps> = ({}: Props) => {
     }
   };
 
+  const getProfileInfo = async (id: string) => {
+    const response: ProfileResponse = await getProfileByUserId(id);
+
+    console.log("response", response);
+    if (response) {
+      setUserInfo(response);
+    }
+  };
+
   useEffect(() => {
     if (user != null) {
       getAllPost(user.uid);
+      getProfileInfo(user.uid);
     }
   }, []);
+
+  console.log("userInfo", userInfo);
   return (
     <Layout>
       <div className="flex-col w-full ">
@@ -74,7 +86,7 @@ const Profile: React.FunctionComponent<IAppProps> = ({}: Props) => {
           </div>
         </div>
         <div className=" flex flex-col pl-10 mt-8 w-auto gap-5">
-          <span>If you want edit your Profile</span>
+          <span>{userInfo.userBio}</span>
           <Button
             onClick={() => navigate("/editprofile", { state: userInfo })}
             className="w-40"

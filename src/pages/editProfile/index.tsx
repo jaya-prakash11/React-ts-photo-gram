@@ -2,19 +2,24 @@ import FileUploader from "@/components/fileUploader";
 import Layout from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { FileEntry, UserProfile } from "@/types";
+import { FileEntry, ProfileInfo, UserProfile } from "@/types";
 import { Label } from "@radix-ui/react-label";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import ProfileImage3 from "../../assets/images/profileimg3.jpeg";
 import { Input } from "@/components/ui/input";
+import { createUser, updateUser } from "@/repository/user.service";
+import { useUserAuth } from "@/context/userAuthContext";
 
 type Props = {};
 type IAppProps = {};
 const EditProfile: React.FunctionComponent<IAppProps> = ({}: Props) => {
+  const { user, updateProfileInfo } = useUserAuth();
   const location = useLocation();
   const { id, userId, userBio, displayName, photoUrl } = location.state;
+
+  console.log("asdasdsad", { id, userId, userBio, displayName, photoUrl });
   const [fileEntry, setFileEntry] = React.useState<FileEntry>({
     files: [],
   });
@@ -28,8 +33,34 @@ const EditProfile: React.FunctionComponent<IAppProps> = ({}: Props) => {
     photoUrl,
   });
 
-  console.log("fileEntry", fileEntry);
-  const handleUpdate = () => {};
+  console.log("fileEntry", { id, userId, userBio, displayName, photoUrl });
+  const handleUpdate = async (e: React.MouseEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      if (fileEntry.files[0].cdnUrl) {
+        data.photoUrl = fileEntry?.files[0].cdnUrl;
+      }
+      if (id) {
+        const response = await updateUser(id, data);
+        console.log(response);
+      } else {
+        const response = await createUser(data);
+        console.log(response);
+      }
+      navigate("/profile");
+
+      const profileInfo: ProfileInfo = {
+        user: user!,
+        displayName: data.displayName,
+        photoUrl: data.photoUrl,
+      };
+
+      updateProfileInfo(profileInfo);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Layout>
       <div className="flex-col w-full">
@@ -38,16 +69,6 @@ const EditProfile: React.FunctionComponent<IAppProps> = ({}: Props) => {
         </div>
         <div className="p-8">
           <form onSubmit={handleUpdate}>
-            {/* <div className="flex flex-col">
-              <Label className="mb-4" htmlFor="profilePicture">
-                Profile Picture
-              </Label>
-              <Textarea
-                id={"caption"}
-                placeholder="Type your message here."
-                //    onChange={(e) => setPost({ ...post, caption: e.target.value })}
-              />
-            </div> */}
             <div className="flex flex-col">
               <Label className="mb-4" htmlFor="profilePicture">
                 Profile Picture
@@ -55,7 +76,9 @@ const EditProfile: React.FunctionComponent<IAppProps> = ({}: Props) => {
               <div className="flex flex-col justify-start items-start w-auto h-auto gap-5 ">
                 <div
                   style={{
-                    backgroundImage: `url(${data.photoUrl || ProfileImage3})`,
+                    backgroundImage: `url(${
+                      fileEntry?.files[0]?.cdnUrl || data.photoUrl
+                    })`,
                   }}
                   className="flex  h-28 w-28 rounded-full border border-black bg-cover bg-center"
                 ></div>
@@ -68,6 +91,7 @@ const EditProfile: React.FunctionComponent<IAppProps> = ({}: Props) => {
                 </Label>
                 <Input
                   id={"displayName"}
+                  value={data.displayName}
                   placeholder="Type your message here."
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setData({ ...data, displayName: e.target.value })
@@ -81,6 +105,7 @@ const EditProfile: React.FunctionComponent<IAppProps> = ({}: Props) => {
                 <Textarea
                   id={"userBio"}
                   placeholder="Type your message here."
+                  value={data.userBio}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                     setData({ ...data, userBio: e.target.value })
                   }

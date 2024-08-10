@@ -1,6 +1,5 @@
 import { db } from "@/firebaseConfig";
-import { DocumentResponse, Post, ProfileResponse } from "@/types";
-import { UserProfile } from "firebase/auth";
+import { DocumentResponse, Post, ProfileResponse, UserProfile } from "@/types";
 import {
   addDoc,
   collection,
@@ -26,7 +25,10 @@ export const createUser = async (user: UserProfile) => {
 
 export const getProfileByUserId = async (userId: string) => {
   try {
-    const q = query(collection(db, COLLECTION_NAME), where("userId", "==", id));
+    const q = query(
+      collection(db, COLLECTION_NAME),
+      where("userId", "==", userId)
+    );
 
     const querySnapshots = await getDocs(q);
 
@@ -51,9 +53,10 @@ export const getProfileByUserId = async (userId: string) => {
   }
 };
 
-export const updateUser = async (userId: string, user: UserProfile) => {
+export const updateUser = async (id: string, user: UserProfile) => {
   try {
-    return updateDoc(doc(db, COLLECTION_NAME, userId), { user });
+    console.log("userId", id);
+    return await updateDoc(doc(db, COLLECTION_NAME, id), { ...user });
   } catch (error) {
     console.log(error);
   }
