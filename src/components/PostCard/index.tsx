@@ -53,22 +53,18 @@ const PostCard: React.FunctionComponent<IAppProps> = ({
     onChange();
   };
 
-  console.log("data.likes", data.likes);
   return (
     <div className="flex w-1/3 mt-3">
       <Card className="flex w-full flex-col">
         <CardHeader className="flex flex-row gap-4 ">
           <div
-            style={{ backgroundImage: `url(${ProfileImage3})` }}
+            style={{ backgroundImage: `url(${data.photoURL})` }}
             className="flex  h-8 w-8 rounded-full border border-black bg-cover bg-center"
           ></div>
-          <span>Quest_user</span>
+          <span>{data.username}</span>
         </CardHeader>
         <CardContent className="flex h-[400px]">
-          <img
-            className="object-cover w-full"
-            src={data.photos[0]?.cdnUrl}
-          ></img>
+          <img className="object-cover w-full" src={data.photoURL}></img>
         </CardContent>
         <CardFooter className="flex flex-col w-full">
           <div className="flex w-full justify-between">
@@ -86,7 +82,7 @@ const PostCard: React.FunctionComponent<IAppProps> = ({
             <MessageCircle></MessageCircle>
           </div>
           <div className="flex mt-2 items-start justify-start w-full">
-            <span>Quest_user: </span> <span> {data.caption}</span>
+            <span>{data.username} </span> <span> {data.caption}</span>
           </div>
         </CardFooter>
       </Card>

@@ -18,8 +18,8 @@ const Profile: React.FunctionComponent<IAppProps> = ({}: Props) => {
   const initialResponse: ProfileResponse = {
     id: "",
     userId: user?.uid,
-    displayName: user?.displayName || "",
-    photoUrl: user?.photoURL || "",
+    displayName: user?.displayName || "set your username",
+    photoUrl: user?.photoURL || profile,
     userBio: "please update your Bio",
   };
 
@@ -57,7 +57,7 @@ const Profile: React.FunctionComponent<IAppProps> = ({}: Props) => {
     const response: ProfileResponse = await getProfileByUserId(id);
 
     console.log("response", response);
-    if (response) {
+    if (Object.keys(response).length) {
       setUserInfo(response);
     }
   };
@@ -79,7 +79,7 @@ const Profile: React.FunctionComponent<IAppProps> = ({}: Props) => {
         <div className="flex w-full pt-6  pl-10 ">
           <div>
             <img
-              src={userInfo.photoUrl ? userInfo.photoUrl : profile}
+              src={userInfo?.photoUrl}
               className="w-28 h-28 rounded-full object-cover"
             ></img>
             {userInfo.displayName}

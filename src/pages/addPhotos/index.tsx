@@ -32,14 +32,16 @@ const AddPhotos: React.FunctionComponent<IAppProps> = ({}: Props) => {
       console.log("Uploaded File Entry : ", fileEntry.files);
       console.log("The create post is : ", post);
       const PhotoMeta: PhotoMeta[] = fileEntry.files.map((res) => {
-        return { cdnUrl: res.cdnUrl, uuid: res.uuid };
+        return { cdnUrl: res.cdnUrl!, uuid: res.uuid! };
       });
 
       if (user) {
         const newPost = {
           ...post,
-          userId: user.uid,
-          photos: PhotoMeta,
+          userId: user.uid!,
+          photos: PhotoMeta!,
+          username: user.displayName!,
+          photoURL: user.photoURL!,
         };
         console.log("newPost", newPost);
         await createPost(newPost);

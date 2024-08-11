@@ -36,8 +36,8 @@ const googleSignIn = () => {
   const googleAuthProvider = new GoogleAuthProvider();
   return signInWithPopup(auth, googleAuthProvider);
 };
-const updateProfileInfo = async (ProfileInfo: UserProfile) => {
-  const response = await updateProfile(ProfileInfo.user, {
+const updateProfileInfo = async (ProfileInfo: ProfileInfo) => {
+  const response: ProfileInfo = await updateProfile(ProfileInfo.user, {
     displayName: ProfileInfo.displayName,
     photoURL: ProfileInfo.photoUrl,
   });

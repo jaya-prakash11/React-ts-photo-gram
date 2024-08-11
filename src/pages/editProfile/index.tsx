@@ -11,6 +11,7 @@ import ProfileImage3 from "../../assets/images/profileimg3.jpeg";
 import { Input } from "@/components/ui/input";
 import { createUser, updateUser } from "@/repository/user.service";
 import { useUserAuth } from "@/context/userAuthContext";
+import { updateUserInfoOnPosts } from "@/repository/post.service";
 
 type Props = {};
 type IAppProps = {};
@@ -35,9 +36,10 @@ const EditProfile: React.FunctionComponent<IAppProps> = ({}: Props) => {
 
   console.log("fileEntry", { id, userId, userBio, displayName, photoUrl });
   const handleUpdate = async (e: React.MouseEvent<HTMLFormElement>) => {
+    console.log("dataiiii", data);
     e.preventDefault();
     try {
-      if (fileEntry.files[0].cdnUrl) {
+      if (fileEntry?.files[0]?.cdnUrl) {
         data.photoUrl = fileEntry?.files[0].cdnUrl;
       }
       if (id) {
@@ -56,6 +58,7 @@ const EditProfile: React.FunctionComponent<IAppProps> = ({}: Props) => {
       };
 
       updateProfileInfo(profileInfo);
+      updateUserInfoOnPosts(profileInfo);
     } catch (error) {
       console.log(error);
     }
